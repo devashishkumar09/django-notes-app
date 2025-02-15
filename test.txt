@@ -1,2 +1,29 @@
-test file
-test1
+pipeline{
+    agent { label "Arrow"}
+    stages{
+        stage('clone'){
+            steps{
+                echo "clone"
+                git url: "https://github.com/devashishkumar09/django-notes-app.git", branch:"master"
+            }
+        }
+        stage('build'){
+            steps{
+                echo "build"
+                sh "whoami"
+                // sh "docker build -t notes-app:latest ."
+            }
+        }
+        stage('test'){
+            steps{
+                echo "test"
+            }
+        }
+        stage('deploy'){
+            steps{
+                echo "deploy"
+                sh "docker run -d -p 8000:8000 notes-app:latest"
+            }
+        }
+    }
+}
